@@ -1,7 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
+from django.core.files.storage import default_storage
 
-from markdown2 import Markdown
+import markdown2
 
 from . import util
 
@@ -15,25 +16,26 @@ def index(request):
                 elif q is not None:
                         results = util.get_entry(q)
                         if results:
-                            return HttpResponseRedirect(f'wiki/{q}')
+                            return HttpResponseRedirect(f"wiki/{q}")
                         elif results is None:
                             entries = util.list_entries()
                             entries = [i for i in entries if i.lower().find(q.lower()) != -1]
-                            return render(request, 'encyclopedia/search.html', {
-                                'entries': entries
+                            return render(request, "encyclopedia/search.html", {
+                                "entries": entries
                             })
 
-def show_page(request, entry):
+def newpage(request):
+    return render(request, "encylopedia/newpage.html", {})
 
-    markymark = Markdown()
-
-    try:
-        html = markymark.convert(util.get_entry(entry))
-        return render(request, "encyclopedia/entry.html", {
-            "entry": entry,
-            "html": html
-        })
-    except TypeError:
-        return render(request, "encyclopedia/error.html", {
-            "error": f"{entry} doesn't exist!"
-        })
+def entry(request, entry):
+	content = util.get_entry(entry)
+	if content:
+		html = markdown2.markdown(content)
+		return render(request, 'encyclopedia/entry.html', {
+			'entry': entry,
+			'html': html
+		})
+	elif content is None:
+		return render(request, 'encyclopedia/error.html', {
+			'error': "This page doesn't exist"
+		})
