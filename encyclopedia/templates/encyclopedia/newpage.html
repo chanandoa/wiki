@@ -7,5 +7,12 @@
 {% block body %}
     <h1>Create New Page</h1>
 
-    <a href="/">Back to Home</a>
+    <form action="{% url 'newpage' %}" method="POST">
+        {% csrf_token %}
+        {{ new_form }}
+        <button>Save Page</button>
+
+    </form>
+    <br>
+    <a href="{% url 'index' %}">Back to Home</a>
 {% endblock %}
