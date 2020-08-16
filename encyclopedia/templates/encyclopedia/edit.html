@@ -5,15 +5,18 @@
 {% endblock %}
 
 {% block body %}
-    <h1>Edit Entry</h1>
+
+    <h1> Edit Entry <br> {{ title_edit }} </h1>
 
     <form action="{% url 'edit' title_edit %}" method="POST">
         
         {% csrf_token %}
         
-        {{ edit_form }}
+        {{ edit_form.edit_body_form }}
         
-        <button>Save Page</button>
+        <br>
+        
+        <button class="btn btn-outline-secondary">Save Page</button>
 
     </form>
     <br>

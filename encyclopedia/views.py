@@ -42,7 +42,10 @@ def entry(request, entry):
 
 class NewPageForm(forms.Form):
     title_form = forms.CharField(label="Title", widget=forms.TextInput(attrs={'placeholder': 'Enter Title'}))
-    body_form = forms.CharField(label="Body", widget=forms.Textarea(attrs={'placeholder': 'Enter Markdown'}))
+    body_form = forms.CharField(label="Body", widget=forms.Textarea(attrs={
+        'placeholder': 'Enter Markdown', 
+        "style": "height: auto; width: 75%;"
+        }))
 
 def newpage(request):
     if request.method == "POST":
@@ -62,7 +65,9 @@ def newpage(request):
     })
 
 class EditPageForm(forms.Form):
-    edit_body_form = forms.CharField(widget=forms.Textarea())
+    edit_body_form = forms.CharField(widget=forms.Textarea(attrs={
+        "style": "height: auto; width: 75%;"
+        }))
 
 def edit(request, title_edit):
     if request.method == "POST":

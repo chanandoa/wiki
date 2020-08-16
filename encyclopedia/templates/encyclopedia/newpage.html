@@ -6,11 +6,19 @@
 
 {% block body %}
     <h1>Create New Page</h1>
+    <hr>
 
     <form action="{% url 'newpage' %}" method="POST">
         {% csrf_token %}
-        {{ new_form }}
-        <button>Save Page</button>
+        <br>
+        {{ new_form.title_form }}
+
+        <br>
+        <br>
+        {{ new_form.body_form }}
+        <br>
+        <br>
+        <button class="btn btn-outline-secondary">Save Page</button>
 
     </form>
     <br>
